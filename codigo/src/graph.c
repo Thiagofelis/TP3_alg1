@@ -53,23 +53,6 @@ void graph_print(graph *gp)
     }
 }
 
-graph graph_duplicateGraph(graph *gp)
-{
-    graph new_graph = graph_create(gp->num_v);
-
-    int i;
-    for (i = 0; i < gp->num_v; i++)
-    {
-        edge* temp = ((gp->adj_list)[i])->next;
-        while (temp != 0)
-        {
-            graph_addSingleEdge(&new_graph, i, temp->vertex);
-            temp = temp->next;
-        }
-    }
-    return new_graph;
-}
-
 void graph_deleteGraph(graph* gp)
 {
     edge *temp, *temp2;

@@ -31,8 +31,6 @@ void graph_addSingleEdge(graph *gp, int v, int u);
 
 void graph_print(graph *gp);
 
-graph graph_duplicateGraph(graph *gp);
-
 void graph_deleteGraph(graph* gp);
 
 int* graph_get2Approximation(graph* gp);

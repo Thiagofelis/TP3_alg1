@@ -52,7 +52,7 @@ int main(int argc, char** argv)
 		free(cover_set);
 	}
 
-    graph_deleteGraph(new_graph);
+  graph_deleteGraph(new_graph);
 	free(new_graph);
 
 	fclose(fp);

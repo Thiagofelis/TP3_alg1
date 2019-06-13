@@ -1,0 +1,2 @@
+#!/bin/bash
+valgrind --leak-check=yes ./tp3_debug $1 $2

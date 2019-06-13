@@ -44,12 +44,12 @@ int main(int argc, char** argv)
 	{
     fprintf(fp, "%d %d\n", n, m);
     int i, j, node_a, node_b;
-    int was_inserted[n][n];
+    int* was_inserted = malloc(n*n*sizeof(int));
     for (i = 0; i < n; i++)
     {
       for (j = 0; j < n; j++)
       {
-        was_inserted[i][j] = 0;
+        was_inserted[i + j * n] = 0;
       }
     }
     for(i = 0; i < m; i++)
@@ -57,13 +57,15 @@ int main(int argc, char** argv)
       do {
         node_a = rand() % n;
         node_b = rand() % n;
-      } while(node_a == node_b || was_inserted[node_a][node_b] == 1);
+      } while(node_a == node_b || was_inserted[node_a + node_b * n] == 1);
 
-      was_inserted[node_a][node_b] = 1;
-      was_inserted[node_b][node_a] = 1;
+      was_inserted[node_a + node_b * n] = 1;
+      was_inserted[node_a + node_b * n] = 1;
 
       fprintf(fp, "%d %d\n", node_a, node_b);
+
     }
+    free(was_inserted);
   }
   fclose(fp);
   return 0;

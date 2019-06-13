@@ -36,7 +36,7 @@ int main(int argc, char** argv)
 
 	if (strcmp(argv[1], "tarefa1") == 0)
 	{
-        printf("%d", graph_getMinimumVertexCoverSize(new_graph));
+        printf("%d\n", graph_getMinimumVertexCoverSize(new_graph));
 	}
 	if (strcmp(argv[1], "tarefa2") == 0)
 	{

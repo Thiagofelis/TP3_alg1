@@ -1,10 +1,11 @@
 #!/bin/bash
 gcc gerador.c -o gerador
 mkdir testes_t2
-for j in {1..100}
+for j in {1..150}
 do
 	for i in {1..10}
 	do
-		./gerador tarefa2 $((j*10)) $((j*10)) $i testes_t2/"teste t2 $i para n=10*$j.txt"
+		printf "iteracao $i do teste $j\n"
+		./gerador tarefa2 $((j*20)) $((j*40)) $i testes_t2/"teste t2 $i para n=20*$j m=40*$j.txt"
 	done
 done

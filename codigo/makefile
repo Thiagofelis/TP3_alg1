@@ -1,7 +1,7 @@
 tp2: main.o graph.o auxfunc.o
 	gcc main.o graph.o auxfunc.o -o tp3 -lm
 
-auxfunc.o: src/auxfunc.c include/auxfunc.h 
+auxfunc.o: src/auxfunc.c include/auxfunc.h
 	gcc -c src/auxfunc.c -lm
 
 graph.o: src/graph.c include/graph.h
@@ -14,3 +14,6 @@ main.o: main.c
 
 clean:
 	rm main.o auxfunc.o graph.o
+
+debug: main.o graph.o auxfunc.o
+	gcc -g main.o graph.o auxfunc.o -o tp3_debug -lm

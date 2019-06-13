@@ -1,0 +1,15 @@
+#!/bin/bash
+t=0
+t1=0
+t2=0
+rm saidas_t2.csv
+for j in {1..300}
+do
+	for i in {1..10}
+	do
+		printf "iteracao $i do teste $j\n"
+		./tp3_aval_t2 tarefa2 testes_t1/"teste t1 $i para n=50*$j.txt" >> saidas_t2.csv
+		printf "," >> saidas_t2.csv
+	done
+	printf "\n" >> saidas_t2.csv
+done

@@ -17,12 +17,6 @@ typedef struct graph
     edge** adj_list;
 } graph;
 
-typedef struct edge_array
-{
-    int array_size;
-    int *array_pointer;
-} edge_array;
-
 graph graph_create(int _num_v);
 
 void graph_addEdge(graph *gp, int v, int u);
@@ -37,6 +31,6 @@ int* graph_get2Approximation(graph* gp);
 
 int graph_getMinimumVertexCoverSize(graph *gp);
 
-void graph_recursiveMVC(graph* gp, int node, int* parent, int* OPT, int* COPT);
+void graph_recursiveMVC(graph* gp, int v, int parent_v, int* OPT_v, int* COPT_v);
 
 #endif // GRAPH_H_INCLUDED

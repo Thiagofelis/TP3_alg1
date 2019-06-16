@@ -75,72 +75,43 @@ int graph_getMinimumVertexCoverSize(graph *gp)
     // OPT(v) -> minimum vertex cover size for <v>
     // (<v> is define as the childre tree of v, that is,
     // the subtree rooted in v)
-    int *OPT = malloc(gp->num_v * sizeof(int));
-    int i;
-    for (i = 0; i < gp->num_v; i++)
-    {
-        OPT[i] = -1;
-    }
+    int *OPT_v = malloc(sizeof(int));
+    int *COPT_v = malloc(sizeof(int));
 
-    // COPT(v) -> minimum vertex cover size for <w_1, ..., w_n>,
-    // with w_1, ..., w_n in v*
-    // (v* is define as the set of the children nodes of v)
-    int *COPT = malloc(gp->num_v * sizeof(int));
-    int *parent = malloc(gp->num_v * sizeof(int));
+    graph_recursiveMVC(gp, 0, 0, OPT_v, COPT_v);
 
-    // node 0 has no parent
-    parent[0] = -1;
+    int MVC_size = *OPT_v;
 
-    graph_recursiveMVC(gp, 0, parent, OPT, COPT);
+    free(OPT_v);
+    free(COPT_v);
 
-
-    int MVCsize = OPT[0];
-
-    free(parent);
-    free(OPT);
-    free(COPT);
-
-    return MVCsize;
+    return MVC_size;
 }
 
-void graph_recursiveMVC(graph* gp, int node, int* parent, int* OPT, int* COPT)
+void graph_recursiveMVC(graph* gp, int v, int parent_v, int* OPT_v, int* COPT_v)
 {
-    if (OPT[node] != -1)
-    // than we don't need to calculate it again
-    {
-        return;
-    }
+    int OPT_covered = 1, OPT_not_covered = 0;
+    *COPT_v = 0;
 
-    int iscovered = 1, isnotcovered = 0, flag = 0;
+    int *OPT_w = malloc(sizeof(int));
+    int *COPT_w = malloc(sizeof(int));
 
-    COPT[node] = 0;
-    edge* temp = (gp->adj_list)[node]->next;
+    edge* temp = (gp->adj_list)[v]->next;
     while (temp != 0)
-    {   // i won't comment the following code, it can be easily
-        // understood from the documentation
-        if (parent[node] != temp->vertex)
+    {
+        if (parent_v != temp->vertex)
         {
-            parent[temp->vertex] = node;
-            graph_recursiveMVC(gp, temp->vertex, parent, OPT, COPT);
-
-            iscovered += OPT[temp->vertex];
-            isnotcovered += 1 + COPT[temp->vertex];
-            COPT[node] += OPT[temp->vertex];
-            flag = 1;
+            graph_recursiveMVC(gp, temp->vertex, v, OPT_w, COPT_w);
+            OPT_covered += *OPT_w;
+            OPT_not_covered += 1 + *COPT_w;
+            *COPT_v += *OPT_w;
         }
         temp = temp->next;
     }
+    free(OPT_w);
+    free(COPT_w);
 
-    if (flag == 0)
-    // childless node
-    {
-        COPT[node] = 0;
-        OPT[node] = 0;
-    }
-    else
-    {
-        OPT[node] = iscovered > isnotcovered ? isnotcovered : iscovered;
-    }
+    *OPT_v = OPT_covered > OPT_not_covered ? OPT_not_covered : OPT_covered;
 }
 
 int* graph_get2Approximation(graph* gp)
